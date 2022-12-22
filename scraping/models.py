@@ -31,3 +31,16 @@ class Language(models.Model):
         verbose_name_plural='Языки программирования'
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = from_cyrillic_to_eng(str(self.name))
+        super().save(*args, **kwargs)
+
+class Vacancy(models.Model):
+    url = models.URLField()
+    title = models.CharField(max_length=250, verbose_name='')
+    company = models.CharField(max_length=250, verbose_name='')
+    description = models.TextField(verbose_name='')
+    city = models.ForeignKey('City', on_delete=models.CASCADE, verbose_name='')
+    language = models.ForeignKey('Language',on_delete=models.CASCADE, verbose_name='')
