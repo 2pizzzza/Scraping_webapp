@@ -1,22 +1,35 @@
 {% extends 'base.html' %}
 {% block title %} HOME {% endblock %}
 {% block content %}
+
 <center>
+    <div style="max-width: 200px">
+        <form method="GET" action="#">
+            <div class="mb-3">
+                {{ form.as_p}}
+            </div>
+            <button type="submit" class="btn btn-primary">Найти</button>
+        </form>
+    </div>
     {% for i in object_list %}
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-8">
-                <div class="card-body">
-                    <a href="{{ i.url }}" ><h1 class="card-title">{{ i.title }}</h1></a>
-                    <h5>{{ i.city }}</h5>
-                    <h5>{{ i.company }}</h5>
-                    <h5>{{ i.language }}</h5>
-                    <p class="card-text">{{ i.description }}</p>
-                    <p class="card-text"><small class="text-muted">{{ i.timestamp }}</small></p>
-                </div>
+    <br>
+    <div class="card text-center" style="max-width: 1000px">
+        <div class="card-body">
+            <a href="{{ i.url }}"><h2 class="card-title">{{ i.title }}</h2></a>
+            <h5>{{ i.company }}</h5>
+            <div>
+                <p class="card-text">{{ i.description }}</p>
             </div>
         </div>
+        <div class="card-footer text-muted">
+            <p class="card-text">{{ i.city.name }} | {{ i.language }} | <small class="text-muted">{{ i.timestamp|date:'d-m-Y' }}</small></p>
+        </div>
     </div>
+    <br>
+    {% empty %}
+    <h2 style="margin: auto;">По вашему запросу, нечего не найдено</h2>
     {% endfor %}
+
 </center>
 {% endblock %}
+
